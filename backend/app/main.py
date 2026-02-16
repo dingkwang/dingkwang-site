@@ -1,3 +1,9 @@
+import os
+
+# Remove CLAUDECODE from process env so the Claude Agent SDK subprocess
+# does not think it is nested inside another Claude Code session.
+os.environ.pop("CLAUDECODE", None)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 

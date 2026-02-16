@@ -1,53 +1,9 @@
-"""Custom tools for the Claude agent to retrieve information about Dingkang Wang."""
+"""Custom MCP tools for the Claude agent to retrieve information about Dingkang Wang."""
 
 import json
+from typing import Any
 
-TOOLS = [
-    {
-        "name": "get_github_repos",
-        "description": (
-            "Returns a list of Dingkang Wang's public GitHub repositories "
-            "with descriptions. Use this when the user asks about projects, "
-            "repositories, or open-source work."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        },
-    },
-    {
-        "name": "get_project_details",
-        "description": (
-            "Returns detailed information about a specific project by name. "
-            "Use this when the user asks for details about a particular project."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "project_name": {
-                    "type": "string",
-                    "description": "The name of the project to look up.",
-                },
-            },
-            "required": ["project_name"],
-        },
-    },
-    {
-        "name": "get_resume",
-        "description": (
-            "Returns Dingkang Wang's full resume and background information "
-            "including work experience, education, skills, and publications. "
-            "Use this when the user asks about experience, qualifications, "
-            "education, or career history."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {},
-            "required": [],
-        },
-    },
-]
+from claude_agent_sdk import tool, create_sdk_mcp_server
 
 _GITHUB_REPOS = [
     {
@@ -224,25 +180,72 @@ Conducted research in computer vision and deep learning at the FOCUS Lab.
 """
 
 
-def execute_tool(tool_name: str, tool_input: dict) -> str:
-    """Execute a tool by name and return its result as a string."""
-    if tool_name == "get_github_repos":
-        return json.dumps(_GITHUB_REPOS, indent=2)
+# ---------------------------------------------------------------------------
+# Define tools using the @tool decorator from claude-agent-sdk
+# ---------------------------------------------------------------------------
 
-    if tool_name == "get_project_details":
-        project_name = tool_input.get("project_name", "").lower().strip()
-        # Try exact match first, then partial match
-        for key, details in _PROJECT_DETAILS.items():
-            if project_name == key or project_name in key or key in project_name:
-                return details
-        # If no match, list available projects
-        available = ", ".join(_PROJECT_DETAILS.keys())
-        return (
-            f"Project '{tool_input.get('project_name')}' not found. "
-            f"Available projects: {available}"
-        )
 
-    if tool_name == "get_resume":
-        return _RESUME_INFO
+@tool(
+    "get_github_repos",
+    "Returns a list of Dingkang Wang's public GitHub repositories with descriptions. "
+    "Use this when the user asks about projects, repositories, or open-source work.",
+    {"type": "object", "properties": {}, "required": []},
+)
+async def get_github_repos(args: dict[str, Any]) -> dict[str, Any]:
+    return {"content": [{"type": "text", "text": json.dumps(_GITHUB_REPOS, indent=2)}]}
 
-    return f"Unknown tool: {tool_name}"
+
+@tool(
+    "get_project_details",
+    "Returns detailed information about a specific project by name. "
+    "Use this when the user asks for details about a particular project.",
+    {
+        "type": "object",
+        "properties": {
+            "project_name": {
+                "type": "string",
+                "description": "The name of the project to look up.",
+            },
+        },
+        "required": ["project_name"],
+    },
+)
+async def get_project_details(args: dict[str, Any]) -> dict[str, Any]:
+    project_name = args.get("project_name", "").lower().strip()
+    for key, details in _PROJECT_DETAILS.items():
+        if project_name == key or project_name in key or key in project_name:
+            return {"content": [{"type": "text", "text": details}]}
+    available = ", ".join(_PROJECT_DETAILS.keys())
+    return {
+        "content": [
+            {
+                "type": "text",
+                "text": (
+                    f"Project '{args.get('project_name')}' not found. "
+                    f"Available projects: {available}"
+                ),
+            }
+        ]
+    }
+
+
+@tool(
+    "get_resume",
+    "Returns Dingkang Wang's full resume and background information including "
+    "work experience, education, skills, and publications. Use this when the user "
+    "asks about experience, qualifications, education, or career history.",
+    {"type": "object", "properties": {}, "required": []},
+)
+async def get_resume(args: dict[str, Any]) -> dict[str, Any]:
+    return {"content": [{"type": "text", "text": _RESUME_INFO}]}
+
+
+# ---------------------------------------------------------------------------
+# Create the MCP server that bundles all tools
+# ---------------------------------------------------------------------------
+
+info_tools_server = create_sdk_mcp_server(
+    name="dingkwang_info",
+    version="1.0.0",
+    tools=[get_github_repos, get_project_details, get_resume],
+)
