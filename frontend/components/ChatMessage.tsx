@@ -21,7 +21,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${
           isUser
-            ? "bg-accent-blue text-dark-950 rounded-br-md"
+            ? "bg-accent text-white rounded-br-md"
             : "bg-dark-800 text-dark-200 rounded-bl-md"
         }`}
       >
@@ -49,7 +49,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
                   const isInline = !className;
                   if (isInline) {
                     return (
-                      <code className="text-accent-cyan" {...props}>
+                      <code className="text-dark-100" {...props}>
                         {children}
                       </code>
                     );

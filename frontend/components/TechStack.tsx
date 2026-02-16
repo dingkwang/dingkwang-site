@@ -2,16 +2,12 @@
 
 interface TechCategory {
   name: string;
-  color: string;
-  borderColor: string;
   items: string[];
 }
 
 const techCategories: TechCategory[] = [
   {
     name: "AI / ML",
-    color: "bg-accent-blue/10 text-accent-blue",
-    borderColor: "border-accent-blue/20",
     items: [
       "Python",
       "PyTorch",
@@ -23,20 +19,14 @@ const techCategories: TechCategory[] = [
   },
   {
     name: "Infrastructure",
-    color: "bg-accent-purple/10 text-accent-purple",
-    borderColor: "border-accent-purple/20",
     items: ["Docker", "CUDA", "Google Cloud", "TPU", "GitHub Actions"],
   },
   {
     name: "Autonomous Driving",
-    color: "bg-accent-green/10 text-accent-green",
-    borderColor: "border-accent-green/20",
     items: ["ROS", "OpenCV", "C++"],
   },
   {
     name: "Tools",
-    color: "bg-accent-orange/10 text-accent-orange",
-    borderColor: "border-accent-orange/20",
     items: ["Git", "Linux", "Jupyter", "VS Code"],
   },
 ];
@@ -73,7 +63,7 @@ export default function TechStack() {
                 {category.items.map((item) => (
                   <span
                     key={item}
-                    className={`px-3.5 py-1.5 text-sm font-medium rounded-lg border ${category.color} ${category.borderColor} transition-all duration-200 hover:scale-105`}
+                    className="px-3.5 py-1.5 text-sm font-medium rounded-lg border bg-dark-800/50 text-dark-300 border-dark-700 transition-all duration-200 hover:scale-105 hover:text-accent hover:border-accent/30"
                   >
                     {item}
                   </span>

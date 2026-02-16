@@ -95,12 +95,12 @@ export default function Projects() {
                   className="p-2 rounded-lg hover:bg-dark-800 transition-colors"
                   aria-label={`View ${project.title} on GitHub`}
                 >
-                  <ExternalLink className="w-4 h-4 text-dark-500 group-hover:text-accent-blue transition-colors" />
+                  <ExternalLink className="w-4 h-4 text-dark-500 group-hover:text-accent transition-colors" />
                 </a>
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-semibold text-dark-100 mb-2 group-hover:text-accent-blue transition-colors">
+              <h3 className="text-lg font-semibold text-dark-100 mb-2 group-hover:text-accent transition-colors">
                 <a
                   href={project.repoUrl}
                   target="_blank"

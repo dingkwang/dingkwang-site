@@ -33,8 +33,8 @@ export default function Hero() {
     >
       {/* Background gradient */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-dark-400/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-dark-300/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
@@ -51,12 +51,12 @@ export default function Hero() {
         {/* Description */}
         <p className="text-dark-400 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
           Software Engineer at{" "}
-          <span className="text-dark-200 font-medium">Tesla</span>, building AI
+          <span className="text-dark-100 font-medium">Tesla</span>, building AI
           agents and infrastructure for automated test generation within vehicle
           software CI/CD pipelines. Working at the intersection of{" "}
-          <span className="text-accent-blue">LLMs</span>,{" "}
-          <span className="text-accent-purple">autonomous driving</span>, and{" "}
-          <span className="text-accent-cyan">data-driven systems</span>.
+          <span className="text-accent">LLMs</span>,{" "}
+          <span className="text-accent">autonomous driving</span>, and{" "}
+          <span className="text-accent">data-driven systems</span>.
         </p>
 
         <p className="text-dark-500 text-base mb-10">
@@ -73,10 +73,10 @@ export default function Hero() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-dark-900 border border-dark-800 hover:border-accent-blue/50 hover:bg-dark-800 transition-all duration-200"
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-dark-900 border border-dark-800 hover:border-accent/40 hover:bg-dark-800 transition-all duration-200"
               aria-label={link.label}
             >
-              <link.icon className="w-5 h-5 text-dark-400 group-hover:text-accent-blue transition-colors" />
+              <link.icon className="w-5 h-5 text-dark-400 group-hover:text-accent transition-colors" />
               <span className="text-sm text-dark-300 group-hover:text-dark-100 transition-colors hidden sm:inline">
                 {link.label}
               </span>
