@@ -7,9 +7,27 @@ interface Project {
   description: string;
   repoUrl: string;
   tags: string[];
+  videoUrl?: string;
+  installCmd?: string;
 }
 
 const projects: Project[] = [
+  {
+    title: "opencode-agent-sdk-python",
+    description:
+      "A Seamless Switch Python SDK for Agent backends. Swap between local Claude execution and OpenCode remote runtime with a standardized API. Includes policy enforcement and hooks.",
+    repoUrl: "https://github.com/dingkwang/opencode-agent-sdk-python",
+    tags: ["Python SDK", "Agent Runtime", "Seamless Switch"],
+    videoUrl: "/opencode-sdk-demo.mp4",
+    installCmd: "pip install opencode-agent-sdk"
+  },
+  {
+    title: "openclaw_superskill",
+    description:
+      "A collection of advanced, production-ready skills for OpenClaw. Includes specialized automation tools and integrations.",
+    repoUrl: "https://github.com/dingkwang/openclaw_superskill",
+    tags: ["OpenClaw", "Skills", "Automation"],
+  },
   {
     title: "claude-pr-review-team",
     description:
@@ -114,6 +132,25 @@ export default function Projects() {
               <p className="text-dark-400 text-sm leading-relaxed mb-4 flex-1">
                 {project.description}
               </p>
+
+              {/* Install Command */}
+              {project.installCmd && (
+                <div className="mb-4 bg-dark-950 rounded-lg p-2 border border-dark-800 font-mono text-xs text-dark-300 overflow-x-auto whitespace-nowrap">
+                  $ {project.installCmd}
+                </div>
+              )}
+
+              {/* Video Demo */}
+              {project.videoUrl && (
+                <div className="mb-4 rounded-lg overflow-hidden border border-dark-800">
+                  <video
+                    src={project.videoUrl}
+                    controls
+                    className="w-full aspect-video object-cover"
+                    poster="/placeholder-video-poster.jpg" // Optional: add a poster if available
+                  />
+                </div>
+              )}
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
